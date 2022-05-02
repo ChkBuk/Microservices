@@ -1,4 +1,4 @@
-package javatpoint.microservice.currencyconversionservice;
+package com.microservice.currencyconversionservice;
 
 import java.math.BigDecimal;
 
