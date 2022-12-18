@@ -17,26 +17,38 @@ import com.mic.res.entity.User;
 public class UserDaoService {
     private static int userCount = 0;
     private static List<User> users = new ArrayList<User>();
-    static{
-        users.add(new User(new BigDecimal(++userCount*Constant.ID_MULTIPICATION_FACTOR), "Charith", convertToLocalDateViaInstant(new Date())));
-        users.add(new User(new BigDecimal(++userCount*Constant.ID_MULTIPICATION_FACTOR), "Madusha", convertToLocalDateViaInstant(new Date())));
-        users.add(new User(new BigDecimal(++userCount*Constant.ID_MULTIPICATION_FACTOR), "Jenuli", convertToLocalDateViaInstant(new Date())));
+    static {
+        users.add(new User(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR), "Charith",
+                convertToLocalDateViaInstant(new Date())));
+        users.add(new User(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR), "Madusha",
+                convertToLocalDateViaInstant(new Date())));
+        users.add(new User(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR), "Jenuli",
+                convertToLocalDateViaInstant(new Date())));
     }
+
     public static LocalDateTime convertToLocalDateViaInstant(Date dateToConvert) {
         LocalDateTime ldt = LocalDateTime.ofInstant(dateToConvert.toInstant(),
-                                             ZoneId.systemDefault());
+                ZoneId.systemDefault());
         return ldt;
     }
-    public List<User> findAll(){
+
+    public List<User> findAll() {
         return users;
     }
+
     public User findById(BigDecimal id) {
         Predicate<? super User> predicate = user -> user.getId().equals(id);
         return users.stream().filter(predicate).findFirst().orElse(null);
     }
+
     public User save(User user) {
-        user.setId(new BigDecimal(++userCount*Constant.ID_MULTIPICATION_FACTOR));
+        user.setId(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR));
         users.add(user);
         return user;
+    }
+
+    public void deleteById(BigDecimal id) {
+        Predicate<? super User> predicate = user -> user.getId().equals(id);
+        users.removeIf(predicate);
     }
 }
