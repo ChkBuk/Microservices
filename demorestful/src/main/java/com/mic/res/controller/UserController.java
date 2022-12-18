@@ -31,7 +31,7 @@ public class UserController {
     public User getUserById(@PathVariable BigDecimal id) {
         User user = userDao.findById(id);
         if(user == null){
-            throw new UserNotFoundException("Id:"+id);
+            throw new UserNotFoundException("User Id:"+id+" is not available in the system, Please re-check the user id.");
         }
             
         return user;
