@@ -18,6 +18,8 @@ import com.mic.res.dao.UserDaoService;
 import com.mic.res.entity.User;
 import com.mic.res.exception.UserNotFoundException;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class UserController {
     @Autowired
@@ -39,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User savedUser = userDao.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId())
                 .toUri();
