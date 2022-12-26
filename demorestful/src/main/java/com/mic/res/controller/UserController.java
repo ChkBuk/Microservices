@@ -3,8 +3,11 @@ package com.mic.res.controller;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +27,9 @@ import jakarta.validation.Valid;
 public class UserController {
     @Autowired
     private UserDaoService userDao;
+    @Autowired
+    private MessageSource messageSource;
+   
 
     @GetMapping(path = "/users")
     public List<User> getAllUsers() {
@@ -50,5 +56,11 @@ public class UserController {
     @DeleteMapping(path = "/users/{id}")
     public void deleteUserById(@PathVariable BigDecimal id) {
         userDao.deleteById(id);
+    }
+
+    @GetMapping(path = "/greet")
+    public String getGreetingMessage() {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage("good.morning.message", null, "Default Message", locale); 
     }
 }
