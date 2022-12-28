@@ -32,15 +32,15 @@ public class UserController {
     private MessageSource messageSource;
    
 
-    @GetMapping(path = "v1/users")
+    @GetMapping(path = "/users/accept", produces ="application/abc.company.app-v1+json")
     public List<User> getAllUsers() {
         return userDao.findAll();
     }
-    @GetMapping(path = "v2/users")
+    @GetMapping(path = "/users/accept", produces ="application/abc.company.app-v2+json")
     public List<UserV2> getAllUsers_V2() {
         return userDao.findAll_V2();
     }
-    @GetMapping(path = "v1/users/{id}")
+    @GetMapping(path = "/users/{id}", params="version=1")
     public User getUserById(@PathVariable BigDecimal id) {
         User user = userDao.findById(id);
         if(user == null){
@@ -49,7 +49,7 @@ public class UserController {
             
         return user;
     }
-    @GetMapping(path = "v2/users/{id}")
+    @GetMapping(path = "/users/{id}", params="version=2")
     public UserV2 getUserById_V2(@PathVariable BigDecimal id) {
         UserV2 user = userDao.findById_V2(id);
         if(user == null){
@@ -58,19 +58,19 @@ public class UserController {
             
         return user;
     }
-    @PostMapping(path = "v1/users")
+    @PostMapping(path = "/users", params="version=1")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User savedUser = userDao.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId())
                 .toUri();
         return ResponseEntity.created(location).build();
     }
-    @DeleteMapping(path = "v1/users/{id}")
+    @DeleteMapping(path = "/users/{id}", params="version=1")
     public void deleteUserById(@PathVariable BigDecimal id) {
         userDao.deleteById(id);
     }
 
-    @GetMapping(path = "v1/greet")
+    @GetMapping(path = "/greet", params="version=1")
     public String getGreetingMessage() {
         Locale locale = LocaleContextHolder.getLocale();
         return messageSource.getMessage("good.morning.message", null, "Default Message", locale); 
