@@ -32,11 +32,11 @@ public class UserController {
     private MessageSource messageSource;
    
 
-    @GetMapping(path = "/users", params="version=1")
+    @GetMapping(path = "/users/header", headers ="X-API-VERSION=1")
     public List<User> getAllUsers() {
         return userDao.findAll();
     }
-    @GetMapping(path = "/users", params="version=2")
+    @GetMapping(path = "/users/header", headers ="X-API-VERSION=2")
     public List<UserV2> getAllUsers_V2() {
         return userDao.findAll_V2();
     }
