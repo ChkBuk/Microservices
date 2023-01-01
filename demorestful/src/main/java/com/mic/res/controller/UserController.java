@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import com.mic.res.dao.UserDaoService;
 import com.mic.res.entity.User;
 import com.mic.res.entity.UserV2;
@@ -50,7 +50,7 @@ public class UserController {
             throw new UserNotFoundException("User Id:"+id+" is not available in the system, Please re-check the user id.");
         }
         entityModel = EntityModel.of(user);
-        WebMvcLinkBuilder link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllUsers());
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).getAllUsers());
         entityModel.add(link.withRel("all-users"));
         return entityModel;
     }
