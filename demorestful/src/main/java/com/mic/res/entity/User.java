@@ -3,15 +3,31 @@ package com.mic.res.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 public class User {
     private BigDecimal id;
     @Size(min=2, message = "Name must be longer than 2 characters")
+    @JsonProperty("user_name")
     private String name;
     @Past(message="Birth date should not be a future date")
+    @JsonProperty("birth_date")
     private LocalDateTime dob;
+    @JsonIgnore
+    private String password;
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public BigDecimal getId() {
         return id;
     }
@@ -20,10 +36,11 @@ public class User {
         this.id = id;
     }
 
-    public User(BigDecimal id, String name, LocalDateTime localDate) {
+    public User(BigDecimal id, String name, LocalDateTime localDate, String password) {
         super();
         this.id = id;
         this.name = name;
+        this.password = password;
         this.dob = localDate;
     }
 
@@ -31,9 +48,10 @@ public class User {
         return name;
     }
 
+   
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", dob=" + dob + "]";
+        return "User [id=" + id + ", name=" + name + ", dob=" + dob + ", password=" + password + "]";
     }
 
     public void setName(String name) {
