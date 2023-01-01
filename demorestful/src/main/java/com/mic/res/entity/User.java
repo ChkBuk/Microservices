@@ -2,6 +2,7 @@ package com.mic.res.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -9,8 +10,10 @@ import jakarta.validation.constraints.Size;
 public class User {
     private BigDecimal id;
     @Size(min=2, message = "Name must be longer than 2 characters")
+    @JsonProperty("user_name")
     private String name;
     @Past(message="Birth date should not be a future date")
+    @JsonProperty("birth_date")
     private LocalDateTime dob;
     public BigDecimal getId() {
         return id;
