@@ -8,6 +8,8 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,7 @@ public class UserController {
     private UserDaoService userDao;
     @Autowired
     private MessageSource messageSource;
+    private EntityModel entityModel;
    
 
     @GetMapping(path = "/users/accept", produces ="application/abc.company.app-v1+json")
@@ -41,13 +44,15 @@ public class UserController {
         return userDao.findAll_V2();
     }
     @GetMapping(path = "/users/{id}", params="version=1")
-    public User getUserById(@PathVariable BigDecimal id) {
+    public EntityModel<User> getUserById(@PathVariable BigDecimal id) {
         User user = userDao.findById(id);
         if(user == null){
             throw new UserNotFoundException("User Id:"+id+" is not available in the system, Please re-check the user id.");
         }
-            
-        return user;
+        entityModel = EntityModel.of(user);
+        WebMvcLinkBuilder link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllUsers());
+        entityModel.add(link.withRel("all-users"));
+        return entityModel;
     }
     @GetMapping(path = "/users/{id}", params="version=2")
     public UserV2 getUserById_V2(@PathVariable BigDecimal id) {
