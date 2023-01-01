@@ -22,11 +22,11 @@ public class UserDaoService {
     private static List<UserV2> users_v2 = new ArrayList<UserV2>();
     static {
         users.add(new User(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR), "Charith",
-                convertToLocalDateViaInstant(new Date())));
+                convertToLocalDateViaInstant(new Date()), "Passw0rd"));
         users.add(new User(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR), "Madusha",
-                convertToLocalDateViaInstant(new Date())));
+                convertToLocalDateViaInstant(new Date()), "Passw0rd"));
         users.add(new User(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR), "Jenuli",
-                convertToLocalDateViaInstant(new Date())));
+                convertToLocalDateViaInstant(new Date()), "Passw0rd"));
 
         users_v2.add(new UserV2(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR),
                 new Name("Charith", "Buddika"),
