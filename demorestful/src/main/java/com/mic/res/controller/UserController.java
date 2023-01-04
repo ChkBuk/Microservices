@@ -11,6 +11,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.mic.res.dao.UserDaoService;
 import com.mic.res.entity.User;
 import com.mic.res.entity.UserV2;
@@ -36,8 +41,12 @@ public class UserController {
    
 
     @GetMapping(path = "/users/accept", produces ="application/abc.company.app-v1+json")
-    public List<User> getAllUsers() {
-        return userDao.findAll();
+    public MappingJacksonValue getAllUsers() {
+        MappingJacksonValue  mappingJacksonValue = new MappingJacksonValue(userDao.findAll());
+        SimpleBeanPropertyFilter filter =  SimpleBeanPropertyFilter.filterOutAllExcept("id","user_name","birth_date");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter",filter);
+        mappingJacksonValue.setFilters(filters);
+        return mappingJacksonValue;
     }
     @GetMapping(path = "/users/accept", produces ="application/abc.company.app-v2+json")
     public List<UserV2> getAllUsers_V2() {

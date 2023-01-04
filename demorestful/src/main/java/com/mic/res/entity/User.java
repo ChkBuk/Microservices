@@ -2,12 +2,15 @@ package com.mic.res.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-@JsonIgnoreProperties({"password","birth_date"})
+//@JsonIgnoreProperties({"password","birth_date"})
+@JsonFilter("UserFilter")
 public class User {
     private BigDecimal id;
     @Size(min=2, message = "Name must be longer than 2 characters")
