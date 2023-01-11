@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 //@JsonIgnoreProperties({"password","birth_date"})
 @JsonFilter("UserFilter")
-public class User {
+public class User extends BaseModel{
     private BigDecimal id;
     @Size(min=2, message = "Name must be longer than 2 characters")
     @JsonProperty("user_name")
