@@ -68,7 +68,7 @@ public class UserController {
         else{
             EntityModel<User> resource = EntityModel.of(user);
 			Link selfLink = entityLinks.linkToItemResource(User.class, id);
-			resource.add(selfLink);
+			resource.add(selfLink.withRel("all_user"));
 			return new ResponseEntity(EntityModel.of(resource), HttpStatus.OK);
         }
         
