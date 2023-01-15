@@ -10,8 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 //@JsonIgnoreProperties({"password","birth_date"})
-//@JsonFilter("UserFilter")
+@JsonFilter("UserFilter")
 public class User extends BaseModel{
+
+    public User(){
+
+    }
+
     private BigDecimal id;
     @Size(min=2, message = "Name must be longer than 2 characters")
     @JsonProperty("user_name")
