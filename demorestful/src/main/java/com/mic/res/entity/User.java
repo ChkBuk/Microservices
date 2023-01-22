@@ -7,22 +7,28 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 //@JsonIgnoreProperties({"password","birth_date"})
-@JsonFilter("UserFilter")
+//@JsonFilter("UserFilter")
+@Entity(name = "Users")
 public class User extends BaseModel{
 
     public User(){
 
     }
-
+    @Id
     private BigDecimal id;
     @Size(min=2, message = "Name must be longer than 2 characters")
     @JsonProperty("user_name")
+    @Column(name = "name")
     private String name;
     @Past(message="Birth date should not be a future date")
     @JsonProperty("birth_date")
+    @Column(name = "dob")
     private LocalDateTime dob;
     private String password;
     

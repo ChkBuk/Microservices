@@ -15,11 +15,14 @@ import com.mic.res.constant.Constant;
 import com.mic.res.entity.User;
 import com.mic.res.entity.UserV2;
 import com.mic.res.repository.UserJDBCRepository;
+import com.mic.res.repository.UserJPARepository;
 
 @Component
 public class UserDaoService {
     @Autowired
     private UserJDBCRepository userRepository;
+    @Autowired
+    private UserJPARepository userJPARepository;
     private static int userCount = 0;
     private static List<UserV2> users_v2 = new ArrayList<UserV2>();
 
@@ -39,7 +42,7 @@ public class UserDaoService {
     }
 
     public User findById(BigDecimal id) {
-        return userRepository.fetchById(id);
+        return userJPARepository.fetchById(id);
     }
 
     public UserV2 findById_V2(BigDecimal id) {
@@ -49,7 +52,7 @@ public class UserDaoService {
 
     public User save(User user) {
         user.setId(new BigDecimal(++userCount * Constant.ID_MULTIPICATION_FACTOR));
-        userRepository.insert(user);
+        userJPARepository.insert(user);
         return user;
     }
 

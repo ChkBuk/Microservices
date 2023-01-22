@@ -41,7 +41,7 @@ public class UserController {
     private MessageSource messageSource;
     @Autowired
     private EntityLinks entityLinks;
-    
+
     private EntityModel entityModel;
 
     @GetMapping(path = "/users")
